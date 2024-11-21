@@ -5,5 +5,5 @@
 
 " routes ":[{
     "src":"/(.*)",
-"dest": "machinelearning/wsgi. py"
+    "dest": "machinelearning/wsgi. py"
 }]}
