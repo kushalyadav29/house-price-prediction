@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inputs</title>
+    <style>
+        /* styles.css */
+        @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+        }
+
+        h1 {
+            letter-spacing: 1px;
+            margin: 0;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 15px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .slider::-webkit-slider-thumb,
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #04AA6D;
+            cursor: pointer;
+        }
+
+        .slider-value {
+            padding-bottom: 5px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .form-container {
+            width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+        .form-container button {
+            background-color: #6c59cc;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            box-shadow: var(--box-shadow);
+            border: 0;
+            display: block;
+            font-size: 16px;
+            margin: 10px 0 30px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .form-container button:hover {
+            background-color: rgb(84, 67, 169);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="form-container">House Rent Price Predictor</h1><br>
+        <div class="form-container">
+            <form action="{% url 'result' %}" method="post" id="form">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <td>
+                            <label for="bhk">Bedroom:</label>
+                        </td>
+                        <td>
+                            <div class="slidecontainer">
+                                <div class="flex-container">
+                                    <input type="range" min="1" max="10" value="5" class="slider" id="bhk" name="bhk">
+                                    <p class="slider-value" id="demo1">5</p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="area">Area:</label>
+                        </td>
+                        <td>
+                            <div class="slidecontainer">
+                                <div class="flex-container">
+                                    <input type="range" min="150" max="10000" value="5" class="slider" id="area"
+                                        name="area">
+                                    <p class="slider-value" id="demo2">5</p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="bathroom">Bathroom:</label>
+                        </td>
+                        <td>
+                            <div class="slidecontainer">
+                                <div class="flex-container">
+                                    <input type="range" min="1" max="10" value="5" class="slider" id="bathroom"
+                                        name="bathroom">
+                                    <p class="slider-value" id="demo3">5</p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="dropdown">Locality:</label>
+                        </td>
+                        <td>
+                            <select name="dropdown" id="dropdown">
+                                {% for i in locality %}
+                                <option value="{{ i }}">{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="dropdown1">Property Type:</label>
+                        </td>
+                        <td>
+                            <select name="dropdown1" id="dropdown1">
+                                {% for i in type %}
+                                <option value="{{ i }}">{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button type="submit" value="submit">Predict</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+    </div>
+    <script>
+        var sliders = document.querySelectorAll(".slider");
+        var outputs = document.querySelectorAll(".slider-value");
+
+        sliders.forEach(function (slider, index) {
+            outputs[index].textContent = slider.value;
+
+            slider.addEventListener("input", function () {
+                outputs[index].textContent = this.value;
+            });
+        });
+    </script>
+</body>
+
+</html>
