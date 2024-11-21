@@ -1,0 +1,9 @@
+{"builds" :[{
+"src": "machinelearning/wsgi",
+"use": "@vercel/python",
+"config":{ "maxLambdaSize": "15mb", "runtime": "python3.9"}}],
+
+" routes ":[{
+    "src":"/(.*)",
+"dest": "machinelearning/wsgi. py"
+}]}
